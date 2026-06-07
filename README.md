@@ -1,73 +1,90 @@
-# React + TypeScript + Vite
+# Newclone_youtube
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+YouTubeライクな動画共有アプリです。
 
-Currently, two official plugins are available:
+## 概要
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+動画のアップロード・一覧表示・再生機能を実装したWebアプリケーションです。
 
-## React Compiler
+AWSのPresigned URLを利用し、クライアントから直接ストレージへアップロードする構成を学習目的で実装しています。
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 使用技術
 
-## Expanding the ESLint configuration
+### フロントエンド
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- React
+- TypeScript
+- Vite
+- CSS
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### バックエンド
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- AWS Lambda
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### インフラ
+
+- AWS S3
+- AWS IAM
+
+## 主な機能
+
+- 動画アップロード
+- 動画一覧表示
+- 動画再生
+- Presigned URL発行
+- ファイル管理
+
+## ディレクトリ構成
+
+text . ├── src │   ├── App.tsx │   ├── Upload.tsx │   ├── indexVideo.tsx │   └── main.tsx ├── public ├── lambda │   └── getPresignedUrl.ts ├── package.json └── README.md 
+
+## セットアップ
+
+### リポジトリの取得
+
+bash git clone https://github.com/gurabushu/Newclone_youtube.git cd Newclone_youtube 
+
+### パッケージインストール
+
+bash npm install 
+
+### 開発サーバー起動
+
+bash npm run dev 
+
+### ビルド
+
+bash npm run build 
+
+## 工夫した点
+
+- TypeScriptを利用し型安全性を確保
+- Reactコンポーネントを責務ごとに分離
+- Presigned URLを利用しサーバー負荷を抑えたアップロード方式を採用
+- GitHubを利用したブランチ運用
+
+
+## 今後の改善予定
+
+- ユーザー認証機能
+- コメント機能
+- 動画検索機能
+- サムネイル生成機能
+- レスポンシブ対応強化
+- CloudFrontによる配信最適化
+
+## 開発者
+
+- GitHub: https://github.com/gurabushu
+- Author: Atsuki Okiyama
 ```
+:::
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- 開発背景
+- ER図
+- 画面キャプチャ
+- システム構成図
+- 苦労した点と解決方法
+
