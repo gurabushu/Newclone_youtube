@@ -10,6 +10,20 @@
   padding: 0;
 }
 
+.display-flex {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.nav{
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .horizontal-list {
   display: flex;
   gap: 1rem;

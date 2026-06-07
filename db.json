@@ -1,0 +1,15 @@
+{
+  "videos": [
+    {
+      "title": "You ever tyr",
+      "videoId": "https://youtu.be/sbqgeGemQPg?si=ZpZ1hEeAhzfoM19k",
+      "id": "G759StTNpBs"
+    },
+    {
+      "title": "You ever try",
+      "videoId": "sbqgeGemQPg&list=RDsbqgeGemQPg&start_radio=1",
+      "id": "_9oCK2JBSGY"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

@@ -1,73 +1,54 @@
-// アップロードページコンポーネント
-//ここでの処理内容説明は、動画ファイルを選択してアップロードする機能を提供することです。
-// ユーザーはファイル入力から動画を選択し、アップロードボタンをクリックすると、
-// サーバーから事前署名付きURLを取得し、そのURLに動画ファイルをPUTリクエストで送信します。
-// 成功すると、ユーザーにアップロード完了の通知が表示されます。
-// 失敗した場合はエラーメッセージが表示されます。
+import { useState } from 'react'
+
+const API_URL = 'http://localhost:3001'
 
 interface UploadPageProps {
   onBack: () => void
 }
 
 export function UploadPage({ onBack }: UploadPageProps) {
+  const [title, setTitle] = useState('')
+  const [videoId, setVideoId] = useState('')
+
+  const handleUpload = async () => {
+    if (!title || !videoId) {
+      alert('タイトルと動画IDを入力してください')
+      return
+    }
+
+    // APIに POSTリクエストで保存
+    await fetch(`${API_URL}/videos`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title, videoId }),
+    })
+
+    alert('追加しました！')
+    setTitle('')
+    setVideoId('')
+  }
+
   return (
     <div>
       <button onClick={onBack}>← 戻る</button>
-      <h1>動画アップロード</h1>
-      <input type="file" id="fileInput" accept="video/*" />
-      <button onClick={uploadVideo}>アップロード</button>
+      <h1>動画追加</h1>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', maxWidth: '400px' }}>
+        <input
+          placeholder="動画タイトル"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <input
+          placeholder="YouTube動画ID (例: dQw4w9WgXcQ)"
+          value={videoId}
+          onChange={(e) => setVideoId(e.target.value)}
+        />
+        <p style={{ fontSize: '12px', color: '#888' }}>
+          YouTube URLの v= 以降の文字列を入力<br />
+          例: https://www.youtube.com/watch?v=<strong>dQw4w9WgXcQ</strong>
+        </p>
+        <button onClick={handleUpload}>一覧に追加</button>
+      </div>
     </div>
   )
 }
-
-//動画アップロード画面を実装したい
-export async function uploadVideo(){
-  const fileInput = document.getElementById("fileInput") as HTMLInputElement;
-
-
-  if (!fileInput.files || fileInput.files.length === 0){
-    alert("ファイルが選択されていません");;
-    return;
-  }
-  const file = fileInput.files[0];
-
-  try {
-    const response = await fetch("http://localhost:3000/getPresignedUrl");
-    const data = await response.json();
-    const presignedUrl = data.presignedUrl;
-
-    await fetch(presignedUrl, {
-      method: "PUT",
-      body: file,
-    });
-
-    alert("動画がアップロードされました");
-  } catch (error) {
-    console.error("動画のアップロードに失敗しました", error);
-    alert("動画のアップロードに失敗しました");
-  }
-
-
-}
-
-
-//動画アップロード画面を実装したい
-function Upload(){
-
-
-  return (
-    <>
-      <input 
-        type="file"
-        id="fileInput"
-        accept="video/*"
-      />
-      <button onClick={uploadVideo}>
-        アップロード    
-      </button>
-    </>
-  );
-
-}
-
-export default Upload
