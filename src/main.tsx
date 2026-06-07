@@ -5,6 +5,7 @@
 import './App.css'
 import { createRoot } from 'react-dom/client'
 import IndexVideo from './indexVideo.tsx'
+import { uploadVideo } from './Uplaod.tsx' 
 
 function Main() {
   return (
@@ -14,7 +15,7 @@ function Main() {
         <p className="read-the-docs">
           動画をアップロードするためのサイトです。下記ボタンにて、アップロードページへ遷移します。
         </p>
-        <button onClick={() => {}}>
+        <button onClick={() => {uploadVideo()}}>
           Upload画面へ
         </button>
       </div>
