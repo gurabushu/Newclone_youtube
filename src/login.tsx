@@ -1,27 +1,52 @@
 
 import { useState } from 'react'
 
+const API_URL = 'http://localhost:3001'
+
 type UserType = { name: string; age: number; email: string }
 
 interface LoginProps {
   onBack: () => void
+  onLogin: (user: UserType) => void
+  onLogout: () => void
 }
 
-export function Login({ onBack }: LoginProps) {
-    const [currentuser, setCurrentuser] = useState<UserType | null>(null)
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
 
-    const handleLogin = () => {
-        // 本来はAPIで認証するが、ここではテスト用に固定値で判定
-        if (username === 'tonokyama' && password === '1234') {
-            setCurrentuser({ name: username, age: 30, email: 'tonokyama@gmail.com' })
+// ログイン機能の実装例
+export function Login({ onBack, onLogin, onLogout }: LoginProps) {
+    const [currentuser, setCurrentuser] = useState<UserType | null>(null) /// ログイン中は user を代入、未ログインは null
+    const [username, setUsername] = useState('') /// ユーザー名の入力状態
+    const [password, setPassword] = useState('') /// パスワードの入力状態
+
+      /// ログイン処理
+    const handleLogin = async () => {
+        if (!username || !password) {
+            alert('ユーザー名とパスワードを入力してください')
+            return
+        }
+    const handleLogout = () => {
+        onLogout()
+        setCurrentuser(null)
+        onLogout()
+        alert('ログアウトしました')
+    }
+
+        // name で検索して取得
+        const res = await fetch(`${API_URL}/users?name=${username}`)
+        const users = await res.json()
+
+        // パスワードはフロント側で比較
+        if (users.length > 0 && users[0].password === password) {
+            const user = { name: users[0].name, age: users[0].age ?? 0, email: users[0].email ?? '' }
+            setCurrentuser(user)
+            onLogin(user)
+            alert(`ようこそ、${users[0].name}さん！`)
+            
         } else {
             alert('ユーザー名またはパスワードが違います')
         }
     }
-
-    return (
+     return (
       <div>
         {currentuser !== null
           ? <h2>{currentuser.name}さんようこそ！</h2>
@@ -44,3 +69,18 @@ export function Login({ onBack }: LoginProps) {
       </div>
     )
   }
+  
+
+  /// ログイン状態を判定する関数
+  export function isUserStatus(currentuser: UserType | null) {
+    const userStatus = currentuser == null
+    if(userStatus === true){
+
+      
+    }
+  }
+
+   
+  
+
+  
