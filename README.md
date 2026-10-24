@@ -71,7 +71,7 @@ bash npm run build
 ## 開発者
 
 - GitHub: https://github.com/gurabushu
-- Author: Atsuki Okiyama
+- Author: Tobojo Labs
 ```
 :::
 
